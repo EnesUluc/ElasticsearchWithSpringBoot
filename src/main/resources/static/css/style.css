@@ -1,0 +1,132 @@
+:root {
+    --bg-white: #fff;
+    --bg-light: #F0F0F0;
+    --bg-primary:  #D9E9CF;
+    --bg-secondary: #B6CEB4;
+    --bg-dark: #96A78D;
+    --bg-gray: #393E46;
+}
+body{
+    font-family: "Prompt", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    background-color: var(--bg-light);
+}
+.container {
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+}
+.text-center{
+    text-align: center;
+}
+/* inputs */
+input{
+    border: 1px solid var(--bg-gray);
+    border-radius: 4px;
+    padding: .5rem .8rem;
+    color: var(--bg-gray);
+    font-size: 1rem;
+}
+input:focus{
+    outline: none;
+    border: 1px solid var(--bg-dark);
+}
+select{
+    height: 40px;
+    border-radius: 8px;
+    color: var(--bg-gray);
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+
+/* --- Display --- */
+/* flex */
+.d-flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.d-flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+/* grid */
+.d-grid{
+    display: grid;
+}
+.align-items-center{
+    align-items: center;
+}
+.grid-center{
+    align-items: center;
+    justify-content: center;
+}
+.place-items{
+    place-items: center;
+}
+.justify-content-center{
+    justify-content: center;
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+
+.g-1{
+    gap: 1.5rem;
+}
+.g-2{
+    gap: 1rem;
+}
+.g-3{
+    gap: .8rem;
+}
+.g-4{
+    gap: .6rem;
+}
+.g-5{
+    gap: .4rem;
+}
+
+.w-100{
+    width: 100%;
+}
+
+/* Backgrounds */
+.bg-primary{
+    background-color: var(--bg-primary);
+}
+.bg-dark{
+    background-color: var(--bg-dark);
+}
+.bg-gray{
+    background-color: var(--bg-gray);
+}
+
+/* Buttons */
+.btn{
+    color: var(--bg-purple);
+    font-size: 14px;
+    border-radius: 12px;
+    padding: .5rem .8rem
+}
+.btn-dark{
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--bg-dark);
+}
+.btn-dark:hover{
+    background-color: var(--bg-dark);
+    transition-duration: .4s;
+    cursor: pointer;
+}
+
+/* cards */
+.card{
+    padding:1rem 1rem;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    max-width: 300px;
+}
