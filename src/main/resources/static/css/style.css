@@ -38,9 +38,15 @@ select{
 }
 a{
     text-decoration: none;
+    text-align: center;
 }
 a:hover{
     text-decoration: none;
+}
+
+/*Error*/
+.error{
+    color: red;
 }
 
 /* --- Display --- */

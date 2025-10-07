@@ -13,24 +13,30 @@
 
 <section>
     <div class="container d-grid grid-center">
-        <div class="card">
-            <div class="d-grid flex-center g-3">
-                <div class="d-grid g-5">
-                    <label>Email</label>
-                    <input type="text">
+            <div class="card">
+                <div th:if="${param.success}" class="alert success" style="color: green;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> The account has been created.
                 </div>
-                <div class="d-grid g-5">
-                    <label>Password</label>
-                    <input type="password">
-                </div>
-                <div>
-                    <button class="btn btn-dark w-100">Login</button>
-                </div>
-                <div class="w-100">
-                    <a class="btn btn-dark w-100" th:href="@{/register}">Sign Up</a>
-                </div>
+                <form method="post" th:action="@{/login}">
+                    <div class="d-grid flex-center g-3">
+                        <div class="d-grid g-5">
+                            <label>Email</label>
+                            <input type="text" name="username">
+                        </div>
+                        <div class="d-grid g-5">
+                            <label>Password</label>
+                            <input type="password" name="password">
+                        </div>
+                        <div class="d-grid g-5">
+                            <button type="submit" class="btn btn-dark">Login</button>
+                        </div>
+                        <div class="d-grid g-5">
+                            <a class="btn btn-dark" th:href="@{/register}">Sign Up</a>
+                        </div>
+                    </div>
+                </form>
+
             </div>
-        </div>
     </div>
 </section>
 </body>

@@ -1,8 +1,6 @@
 package com.blog.BlogSite.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,10 +12,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UsersDto {
 
-    @Email
+    @NotBlank(message = "Enter a valid email!")
+    @Email(message = "Email should be valid!")
     private String email;
 
-    @NotNull
-    @Min(4)
+    @NotNull(message = "is required!")
+    @Size(min = 4,message = "is required (at least 4 character)")
     private String password;
+
+    @NotNull
+    private String authority;
 }

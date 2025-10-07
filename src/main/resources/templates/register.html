@@ -30,13 +30,13 @@
           </div>
           <div class="d-grid g-5">
             <label>Role</label>
-            <select>
-              <option value="">User</option>
-              <option value="">Admin</option>
+            <select th:field="*{authority}">
+              <option value="Author">Author</option>
+              <option value="Admin">Admin</option>
             </select>
           </div>
           <div>
-            <button class="btn btn-dark w-100">Create Account</button>
+            <button class="btn btn-dark w-100" type="submit">Create Account</button>
           </div>
         </div>
       </form>

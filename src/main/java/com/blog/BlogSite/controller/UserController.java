@@ -4,21 +4,30 @@ import com.blog.BlogSite.dto.UsersDto;
 import com.blog.BlogSite.service.UsersService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
-    private UsersService usersService;
+    private final UsersService usersService;
 
+    @Autowired
     public UserController(UsersService usersService) {
         this.usersService = usersService;
     }
 
-    @Autowired
-
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder){
+        StringTrimmerEditor ste = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class,ste);
+    }
 
     @GetMapping("/")
     public String login(){
@@ -32,8 +41,21 @@ public class UserController {
     }
 
     @PostMapping("/register/new")
-    public String registerNew(@Valid UsersDto usersDto){
+    public String registerNew(@Valid @ModelAttribute("user") UsersDto usersDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "register";
+        }
         usersService.save(usersDto);
-        return "redirect:/";
+        return "redirect:/?success";
+    }
+
+    @GetMapping("/login-page")
+    public String dashboard(){
+        return "login-page";
+    }
+
+    @GetMapping("/refused")
+    public String refused(){
+        return "refused";
     }
 }
