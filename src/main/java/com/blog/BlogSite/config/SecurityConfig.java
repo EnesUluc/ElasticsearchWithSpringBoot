@@ -42,7 +42,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-
     // Defines which UserDetails will be used
     @Bean
     public AuthenticationProvider authProvider(){
@@ -50,6 +49,5 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return authenticationProvider;
     }
-
 
 }

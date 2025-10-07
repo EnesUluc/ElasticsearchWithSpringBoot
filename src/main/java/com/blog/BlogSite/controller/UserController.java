@@ -29,10 +29,6 @@ public class UserController {
         dataBinder.registerCustomEditor(String.class,ste);
     }
 
-    @GetMapping("/")
-    public String login(){
-        return "login";
-    }
 
     @GetMapping("/register")
     public String register(Model model){
@@ -47,15 +43,5 @@ public class UserController {
         }
         usersService.save(usersDto);
         return "redirect:/?success";
-    }
-
-    @GetMapping("/login-page")
-    public String dashboard(){
-        return "login-page";
-    }
-
-    @GetMapping("/refused")
-    public String refused(){
-        return "refused";
     }
 }

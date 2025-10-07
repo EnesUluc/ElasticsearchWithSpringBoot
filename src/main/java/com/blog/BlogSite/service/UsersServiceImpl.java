@@ -16,7 +16,6 @@ public class UsersServiceImpl implements UsersService{
         this.usersRepo = usersRepo;
     }
 
-
     @Override
     public Users save(UsersDto usersDto) {
         Users users = new Users();
@@ -25,7 +24,6 @@ public class UsersServiceImpl implements UsersService{
         users.setPassword(new BCryptPasswordEncoder().encode(usersDto.getPassword()));
         return usersRepo.save(users);
     }
-
     @Override
     public Users findByEmail(String username) {
         return usersRepo.findByEmail(username);

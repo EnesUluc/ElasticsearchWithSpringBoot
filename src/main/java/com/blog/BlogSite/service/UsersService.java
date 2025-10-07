@@ -7,5 +7,4 @@ import com.blog.BlogSite.entity.Users;
 public interface UsersService {
     Users save(UsersDto usersDto);
     Users findByEmail(String username);
-
 }
