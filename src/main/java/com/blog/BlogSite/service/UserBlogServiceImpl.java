@@ -1,0 +1,28 @@
+package com.blog.BlogSite.service;
+
+import co.elastic.clients.util.DateTime;
+import com.blog.BlogSite.entity.UserBlog;
+import com.blog.BlogSite.repo.UserBlogRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Service
+public class UserBlogServiceImpl implements UserBlogService {
+    private final UserBlogRepo userBlogRepo;
+
+    @Autowired
+    public UserBlogServiceImpl(UserBlogRepo userBlogRepo) {
+        this.userBlogRepo = userBlogRepo;
+    }
+
+
+    @Override
+    public UserBlog save(UserBlog userBlog) {
+        userBlog.setCreatedAt(LocalDateTime.now());
+        return userBlogRepo.save(userBlog);
+    }
+}

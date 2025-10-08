@@ -26,14 +26,14 @@
 
 <section>
     <div class="container text-center">
-        <form>
+        <form th:action="@{/edit-blogs}" method="post" th:object="${blog}">
             <div class="card d-grid g-1">
                 <div>
                     <div class="blog-header">
                         Title
                     </div>
                     <div class="blog-body">
-                        <input type="text">
+                        <input type="text" th:field="*{title}">
                     </div>
                 </div>
 
@@ -42,12 +42,12 @@
                         Text
                     </div>
                     <div class="blog-body">
-                        <textarea name="" id=""></textarea>
+                        <textarea name="" id="" th:field="*{text}"></textarea>
                     </div>
                 </div>
 
                 <div>
-                    <button class="btn btn-dark">Publish Blog</button>
+                    <button class="btn btn-dark" type="submit">Publish Blog</button>
                 </div>
 
             </div>

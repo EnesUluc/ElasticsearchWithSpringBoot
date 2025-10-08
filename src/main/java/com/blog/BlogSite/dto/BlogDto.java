@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BlogDto {
     private String text;
+    private String title;
 }

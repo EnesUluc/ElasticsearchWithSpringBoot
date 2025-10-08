@@ -20,5 +20,6 @@ public class Blog {
     private int userId;
     private int blogId;
 
+    private String title;
     private String text;
 }
