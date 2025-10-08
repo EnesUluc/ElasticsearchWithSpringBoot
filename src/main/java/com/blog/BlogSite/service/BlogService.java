@@ -9,4 +9,5 @@ public interface BlogService {
     List<Blog> findAllBlogs();
     Optional<Blog> findByBlogId(String blogId);
     void deleteBlog(String blogId);
+    List<Blog> searchByTextWord(String text);
 }

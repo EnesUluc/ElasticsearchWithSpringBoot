@@ -29,7 +29,7 @@ public class SecurityConfig {
         http.authenticationProvider(authProvider());
 
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/login-page").authenticated();
+            auth.requestMatchers("/blogs").authenticated();
             auth.anyRequest().permitAll();
         });
         http.formLogin(form ->
@@ -37,7 +37,7 @@ public class SecurityConfig {
                         .successHandler(customAuthenticationSuccessHandler))
                 .logout(logout -> {
                     logout.logoutUrl("/logout");
-                    logout.logoutSuccessUrl("/");
+                    logout.logoutSuccessUrl("/?logout");
                 }).cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }

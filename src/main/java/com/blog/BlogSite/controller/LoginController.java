@@ -10,9 +10,14 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/login-page")
+    @GetMapping("/login")
+    public String log(){
+        return "login";
+    }
+
+    @GetMapping("/blogs")
     public String dashboard(){
-        return "login-page";
+        return "blogs";
     }
 
     @GetMapping("/access-denied")

@@ -41,4 +41,9 @@ public class BlogServiceImpl implements BlogService{
     public void deleteBlog(String blogId) {
         blogRepo.deleteById(blogId);
     }
+
+    @Override
+    public List<Blog> searchByTextWord(String text) {
+        return blogRepo.searchByText(text);
+    }
 }

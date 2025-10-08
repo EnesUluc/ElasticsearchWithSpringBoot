@@ -13,13 +13,14 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         UserDetails user = (UserDetails) authentication.getPrincipal();
+
         String username = user.getUsername();
         System.out.println("The user: "+username+" logged in.");
         boolean hasRole = authentication.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("Author"));
         if(hasRole){
-            response.sendRedirect("/login-page");
+            response.sendRedirect("/blogs");
         }else{
             response.sendRedirect("/refused");
         }

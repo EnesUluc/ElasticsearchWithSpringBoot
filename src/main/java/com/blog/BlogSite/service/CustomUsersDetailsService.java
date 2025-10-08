@@ -21,7 +21,14 @@ public class CustomUsersDetailsService implements UserDetailsService {
     // Find the user using your CustomUserDetails class
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if(username == null || username.trim().isEmpty()){
+            throw new UsernameNotFoundException("Username cannot be empty!");
+        }
+
         Users users = usersService.findByEmail(username);
+        if(users == null){
+            throw new UsernameNotFoundException("User not found with email!");
+        }
         return new CustomUsersDetails(users);
     }
 }

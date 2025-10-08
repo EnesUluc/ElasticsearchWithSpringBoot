@@ -4,6 +4,8 @@ import com.blog.BlogSite.dto.UsersDto;
 import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.repo.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,11 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public Users findByEmail(String username) {
         return usersRepo.findByEmail(username);
+    }
+
+    @Override
+    public Users getCurrentUserProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return usersRepo.findByEmail(authentication.getName());
     }
 }

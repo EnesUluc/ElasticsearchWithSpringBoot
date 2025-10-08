@@ -5,25 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.List;
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class Users {
+@Table(name = "user_blog")
+public class UserBlog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer blogId;
 
-    private String email;
-    private String password;
-    private String authority;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users user;
 
-    @OneToMany(mappedBy = "user", targetEntity = UserBlog.class, cascade = CascadeType.ALL)
-    private List<UserBlog> blogs;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date createdAt;
 
 }

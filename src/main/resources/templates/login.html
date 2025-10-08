@@ -14,11 +14,20 @@
 <section>
     <div class="container d-grid grid-center">
             <div class="card">
-                <div th:if="${param.success}" class="alert success" style="color: green;">
-                    <i class="fa-solid fa-triangle-exclamation"></i> The account has been created.
-                </div>
                 <form method="post" th:action="@{/login}">
                     <div class="d-grid flex-center g-3">
+                        <div th:if="${param.success}" class="alert success" style="color: green;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> The account has been created.
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success" style="color: red;">
+                            <i class="fa fa-sign-out"></i> You have been logged out.
+                        </div>
+
+                        <div th:if="${param.error}" class="alert alert-warning" style="color: red;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Email or password incorrect!
+                        </div>
+
+
                         <div class="d-grid g-5">
                             <label>Email</label>
                             <input type="text" name="username">
@@ -31,7 +40,7 @@
                             <button type="submit" class="btn btn-dark">Login</button>
                         </div>
                         <div class="d-grid g-5">
-                            <a class="btn btn-dark" th:href="@{/register}">Sign Up</a>
+                            <a class="btn btn-dark text-center" th:href="@{/register}">Sign Up</a>
                         </div>
                     </div>
                 </form>

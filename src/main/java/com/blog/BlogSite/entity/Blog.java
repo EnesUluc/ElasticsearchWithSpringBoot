@@ -17,5 +17,8 @@ public class Blog {
     @Id
     private String id;
 
+    private int userId;
+    private int blogId;
+
     private String text;
 }
