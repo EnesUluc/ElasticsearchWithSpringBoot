@@ -173,7 +173,7 @@ header{
 }
 .text{
     padding: .6rem;
-    height: 100px;
+    max-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -238,6 +238,11 @@ header{
         border: 1px solid  var(--bg-dark);
     }
 
+}
+.blog-title{
+    padding: .6rem;
+    color: var(--bg-gray);
+    font-weight: 700;
 }
 
 

@@ -15,11 +15,6 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/blogs")
-    public String dashboard(){
-        return "blogs";
-    }
-
     @GetMapping("/access-denied")
     public String accessDenied(){
         return "access-denied";

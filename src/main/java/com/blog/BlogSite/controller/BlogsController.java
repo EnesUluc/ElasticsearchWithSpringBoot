@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class BlogsController {
     private final UsersService usersService;
@@ -26,36 +28,34 @@ public class BlogsController {
         this.blogService = blogService;
     }
 
+    @GetMapping("/blogs")
+    public String dashboard(Model model){
+        List<BlogDto> blogDtoList = blogService.findAllBlogsDto();
+        model.addAttribute("blogList", blogDtoList);
+        return "blogs";
+    }
 
     @GetMapping("/edit-blogs")
     public String editBlog(Model model){
-        model.addAttribute("blog", new BlogDto());
+        model.addAttribute("blogList", blogService.findAllBlogsDto());
         return "blog-edit";
     }
 
     @PostMapping("/edit-blogs")
     public String createBlog(BlogDto blogDto){
-
-        // burayı toparla metot içini temizle biraz.s
         Users user = usersService.getCurrentUserProfile();
 
+        // Create a user blog
         UserBlog userBlog = new UserBlog();
         userBlog.setUser(user);
         user.getBlogs().add(userBlog);
-
         UserBlog savedUserBlog = userBlogService.save(userBlog);
 
-        Blog blog = new Blog();
-        blog.setTitle(blogDto.getTitle());
-        blog.setText(blogDto.getText());
-        blog.setBlogId(savedUserBlog.getBlogId());
-        blog.setUserId(user.getUserId());
 
+        int blogId = savedUserBlog.getBlogId();
+        int userId = user.getUserId();
+        blogService.saveBlogDto(blogDto, blogId, userId);
 
-
-        blogService.saveBlog(blog);
-
-        // now you can save and set user of blog. ***********************
         return "redirect:/blogs";
     }
 }

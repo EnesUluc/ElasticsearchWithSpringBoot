@@ -29,13 +29,14 @@
 
 <section>
     <div class="container d-grid g-1">
-        <div class="card card-blog">
+        <div class="card card-blog" th:each="blog : ${blogList}">
             <div class="profile">
                 <div class="img"><img th:src="@{/images/user.jpg}" alt=""></div>
                 <div class="name">Muhammed Enes</div>
             </div>
-            <div class="text">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat odit nihil natus ipsum officia eligendi beatae expedita ab eaque, tenetur ullam eius optio facere repellat, sunt vitae facilis incidunt vero!Lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, et, voluptas quia qui nesciunt nisi, fugiat at reiciendis dicta labore minus earum dolorum aliquid natus dignissimos voluptatibus atque. Fuga, quod?
+            <div><h3 class="blog-title" th:text="${blog.title}"></h3></div>
+            <div class="text" th:text="${blog.text}">
+
             </div>
             <div class="like d-flex justify-content-end g-1">
                 <a href=""><i class="fa-solid fa-heart" style="color: red;"></i> 17</a>
