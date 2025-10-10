@@ -2,6 +2,7 @@ package com.blog.BlogSite.service;
 
 import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.entity.Blog;
+import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.repo.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,5 +76,16 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public List<Blog> searchByTextWord(String text) {
         return blogRepo.searchByText(text);
+    }
+
+    @Override
+    public int findAllByUserId(int userId) {
+        List<Blog> blogList = blogRepo.findAllByUserId(userId);
+        return blogList.size();
+    }
+
+    @Override
+    public void deleteAllByUserId(int userId) {
+        blogRepo.deleteAllByUserId(userId);
     }
 }

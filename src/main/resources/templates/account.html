@@ -16,8 +16,8 @@
                     <a th:href="@{/blogs}" class=""><i class="fa-solid fa-blog"></i> Blogistan</a>
                 </div>
                 <div class="d-flex d-flex-row g-2">
-                    <div><a th:href="@{/edit-blogs}" class="active"><i class="fas fa-edit"></i> Create Blog</a></div>
-                    <div><a th:href="@{/account}"><i class="fa-solid fa-user"></i> Account</a></div>
+                    <div><a th:href="@{/edit-blogs}"><i class="fas fa-edit"></i> Create Blog</a></div>
+                    <div><a href="" class="active"><i class="fa-solid fa-user"></i> Account</a></div>
                     <div><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a></div>
                 </div>
             </div>
@@ -26,35 +26,37 @@
 
     <section>
         <div class="container text-center">
-            <form th:action="@{/edit-blogs}" method="post" th:object="${blog}">
-                <div class="card d-grid g-1">
-                    <div class="title"><h3>Create a New Blog</h3></div>
+            <div class="card d-grid g-1">
+                <div class="title"><h3>Account Details</h3></div>
+                <div>
                     <div>
-                        <div class="blog-header">
-                            Title
-                        </div>
-                        <div class="blog-body">
-                            <input type="text" th:field="*{title}">
-                        </div>
+                        Email
                     </div>
-
-                    <div>
-                        <div class="blog-header">
-                            Text
-                        </div>
-                        <div class="blog-body">
-                            <textarea name="" id="" th:field="*{text}"></textarea>
-                        </div>
+                    <div class="blog-body">
+                        <input type="text" readonly th:placeholder="${email}">
                     </div>
-
-                    <div>
-                        <button class="btn btn-dark" type="submit">Publish Blog</button>
-                    </div>
-
                 </div>
-            </form>
+
+
+                <div>
+                    <div>
+                        Blogs
+                    </div>
+                    <div class="blog-body">
+                        <input type="text" readonly th:placeholder="${blogCount}">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="blog-body">
+                        <a class="btn btn-dark" th:href="@{/account/delete(id=${userId})}">Delete Account</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
+
 
 
 </body>

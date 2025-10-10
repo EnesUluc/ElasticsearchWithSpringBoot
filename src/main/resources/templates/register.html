@@ -22,6 +22,9 @@
                                                         th:errors="*{email}"
                                                         class="error"></span>
           </div>
+          <div th:if="${param.warning}" class="alert warning" style="color: red;">
+            <i class="fa-solid fa-triangle-exclamation"></i> There is already an account associated with this email address.
+          </div>
           <div class="d-grid g-5">
             <label>Password</label>
             <input type="password" th:field="*{password}"><span th:if="${#fields.hasErrors('password')}"

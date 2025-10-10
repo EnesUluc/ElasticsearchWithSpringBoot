@@ -177,6 +177,10 @@ header{
     overflow-y: auto;
     overflow-x: hidden;
 }
+.title{
+    color: var(--bg-gray);
+    letter-spacing: 1px;
+}
 /* text scrollbar */
 .text::-webkit-scrollbar{
     width: 10px;

@@ -37,7 +37,7 @@ public class BlogsController {
 
     @GetMapping("/edit-blogs")
     public String editBlog(Model model){
-        model.addAttribute("blogList", blogService.findAllBlogsDto());
+        model.addAttribute("blog", new BlogDto());
         return "blog-edit";
     }
 

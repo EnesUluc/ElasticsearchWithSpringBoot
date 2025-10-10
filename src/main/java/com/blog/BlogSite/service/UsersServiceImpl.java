@@ -36,4 +36,9 @@ public class UsersServiceImpl implements UsersService{
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return usersRepo.findByEmail(authentication.getName());
     }
+
+    @Override
+    public void deleteById(Integer userId) {
+        usersRepo.deleteById(userId);
+    }
 }

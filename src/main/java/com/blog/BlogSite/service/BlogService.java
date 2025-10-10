@@ -2,6 +2,8 @@ package com.blog.BlogSite.service;
 
 import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.entity.Blog;
+import com.blog.BlogSite.entity.Users;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +15,6 @@ public interface BlogService {
     Optional<Blog> findByBlogId(String blogId);
     void deleteBlog(String blogId);
     List<Blog> searchByTextWord(String text);
+    int findAllByUserId(int userId);
+    void deleteAllByUserId(int userId);
 }

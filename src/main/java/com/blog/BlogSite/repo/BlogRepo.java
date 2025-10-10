@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
     public interface BlogRepo extends ElasticsearchRepository<Blog, String> {
     List<Blog> searchByText(String word);
+    List<Blog> findAllByUserId(int userId);
+    void deleteAllByUserId(int userId);
 }

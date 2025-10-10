@@ -8,4 +8,5 @@ public interface UsersService {
     Users save(UsersDto usersDto);
     Users findByEmail(String username);
     Users getCurrentUserProfile();
+    void deleteById(Integer userId);
 }
