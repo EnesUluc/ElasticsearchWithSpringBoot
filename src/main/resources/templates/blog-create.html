@@ -13,43 +13,46 @@
         <div class="container">
             <div class="navbar d-flex justify-content-between">
                 <div>
-                    <a th:href="@{/blogs}"><i class="fa-solid fa-blog"></i> Blogistan</a>
+                    <a th:href="@{/blogs}" class=""><i class="fa-solid fa-blog"></i> Blogistan</a>
                 </div>
                 <div class="d-flex d-flex-row g-2">
-                    <div><a th:href="@{/blogs/create-blog}"><i class="fas fa-edit"></i> Create Blog</a></div>
+                    <div><a th:href="@{/blogs/create-blog}" class="active"><i class="fas fa-edit"></i> Create Blog</a></div>
                     <div><a th:href="@{/account}"><i class="fa-solid fa-user"></i> Account</a></div>
                     <div><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a></div>
                 </div>
             </div>
         </div>
-
-
     </header>
 
     <section>
-        <div class="container">
-            <div class="card d-grid g-3 justify-content-center">
-                <div class="title text-center"><h3>Select a Blog</h3></div>
-                <div>
-                    <table class="card">
-                        <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="blog : ${blogList}">
-                                <td th:text="${blog.title}"></td>
-                                <td>
-                                    <a th:href="@{/blogs/edit-blogs/{id}(id=${blog.blogId})}" class="btn btn-dark">Edit</a>
-                                    <a href="" class="btn btn-dark">Remove</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="container text-center">
+            <form th:action="@{/blogs/create-blog}" method="post" th:object="${blog}">
+                <div class="card d-grid g-1">
+                    <div class="title"><h3>Create a New Blog</h3></div>
+                    <div>
+                        <div class="blog-header">
+                            Title
+                        </div>
+                        <div class="blog-body">
+                            <input type="text" th:field="*{title}">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="blog-header">
+                            Text
+                        </div>
+                        <div class="blog-body">
+                            <textarea name="" id="" th:field="*{text}"></textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-dark" type="submit">Publish Blog</button>
+                    </div>
+
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 

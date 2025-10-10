@@ -11,4 +11,5 @@ import java.util.List;
     List<Blog> searchByText(String word);
     List<Blog> findAllByUserId(int userId);
     void deleteAllByUserId(int userId);
+    Blog findByBlogId(int blogId);
 }

@@ -4,6 +4,7 @@ import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.repo.BlogRepo;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,10 +18,12 @@ import java.util.Optional;
 @Service
 public class BlogServiceImpl implements BlogService{
     private final BlogRepo blogRepo;
+    private final UsersService usersService;
 
     @Autowired
-    public BlogServiceImpl(BlogRepo blogRepo) {
+    public BlogServiceImpl(BlogRepo blogRepo, UsersService usersService) {
         this.blogRepo = blogRepo;
+        this.usersService = usersService;
     }
 
     @Override
@@ -58,6 +61,8 @@ public class BlogServiceImpl implements BlogService{
             blogDto.setTitle(blog.getTitle());
             blogDto.setText(blog.getText());
 
+            // Get the username
+            usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
             blogDtos.add(blogDto);
         }
         return blogDtos;
@@ -66,6 +71,11 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public Optional<Blog> findByBlogId(String blogId) {
         return blogRepo.findById(blogId);
+    }
+
+    @Override
+    public Blog findByBlogId(int id) {
+        return blogRepo.findByBlogId(id);
     }
 
     @Override

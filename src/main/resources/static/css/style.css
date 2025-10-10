@@ -248,6 +248,24 @@ header{
     color: var(--bg-gray);
     font-weight: 700;
 }
+/* table */
+th, td{
+    padding: 1rem;
+}
+table, td, th{
+    border: 1px solid var(--bg-gray);
+    text-align: left;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  z-index: 2;
+}
+tr:hover{
+    transition-duration: .6s;
+    background-color: var(--bg-primary);
+    cursor: pointer;
+}
 
 
 @media(max-width:1200px){

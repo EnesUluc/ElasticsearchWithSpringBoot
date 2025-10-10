@@ -39,7 +39,7 @@ public class UserController {
         if(bindingResult.hasErrors()){
             return "register";
         }
-        if(usersService.findByEmail(usersDto.getEmail()) != null){
+        if(usersService.checkEmailIsRegistered(usersDto.getEmail())){
             return "redirect:/register?warning";
         }
         usersService.save(usersDto);

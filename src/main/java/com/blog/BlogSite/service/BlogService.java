@@ -13,6 +13,7 @@ public interface BlogService {
     List<Blog> findAllBlogs();
     List<BlogDto> findAllBlogsDto();
     Optional<Blog> findByBlogId(String blogId);
+    Blog findByBlogId(int id);
     void deleteBlog(String blogId);
     List<Blog> searchByTextWord(String text);
     int findAllByUserId(int userId);

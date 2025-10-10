@@ -10,12 +10,12 @@ import com.blog.BlogSite.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/blogs")
 public class BlogsController {
     private final UsersService usersService;
     private final UserBlogService userBlogService;
@@ -28,20 +28,20 @@ public class BlogsController {
         this.blogService = blogService;
     }
 
-    @GetMapping("/blogs")
+    @GetMapping("")
     public String dashboard(Model model){
         List<BlogDto> blogDtoList = blogService.findAllBlogsDto();
         model.addAttribute("blogList", blogDtoList);
         return "blogs";
     }
 
-    @GetMapping("/edit-blogs")
+    @GetMapping("/create-blog")
     public String editBlog(Model model){
         model.addAttribute("blog", new BlogDto());
-        return "blog-edit";
+        return "blog-create";
     }
 
-    @PostMapping("/edit-blogs")
+    @PostMapping("/create-blog")
     public String createBlog(BlogDto blogDto){
         Users user = usersService.getCurrentUserProfile();
 
@@ -57,5 +57,25 @@ public class BlogsController {
         blogService.saveBlogDto(blogDto, blogId, userId);
 
         return "redirect:/blogs";
+    }
+
+    @GetMapping("/edit-blogs")
+    public String listYourBlogs(Model model){
+        List<Blog> blogList = blogService.findAllBlogs();
+        model.addAttribute("blogList", blogList);
+        return "blog-edit";
+    }
+
+    @GetMapping("/edit-blogs/{id}")
+    public String editYourBlog(@PathVariable("id") int blogId){
+
+        // Çok temiz geliyor veri, artık burayı yolu düzenle yeni sayfamıza fırlat edit edelim blogumuzu.
+        Blog blog = blogService.findByBlogId(blogId);
+        System.out.println("Blog id: "+blogId);
+        System.out.println("Blog title: "+blog.getTitle());
+        System.out.println("User: "+blog.getUserId());
+
+        return "redirect:/blogs";
+
     }
 }

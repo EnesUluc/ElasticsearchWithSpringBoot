@@ -17,13 +17,13 @@
                 <form method="post" th:action="@{/login}">
                     <div class="d-grid flex-center g-3">
                         <div th:if="${param.success}" class="alert success" style="color: green;">
-                            <i class="fa-solid fa-triangle-exclamation"></i> The account has been created.
+                            <i class="fa-solid fa-triangle-exclamation"></i> The account has been created!
                         </div>
-                        <div th:if="${param.info}" class="alert info">
-                            <i class="fa-solid fa-triangle-exclamation" style="color: red;"></i> The account has been deleted.
+                        <div th:if="${param.info}" class="alert info" style="color: red;">
+                            <i class="fa-solid fa-triangle-exclamation"></i> The account has been deleted!
                         </div>
                         <div th:if="${param.logout}" class="alert alert-success" style="color: red;">
-                            <i class="fa fa-sign-out"></i> You have been logged out.
+                            <i class="fa fa-sign-out"></i> You have been logged out!
                         </div>
 
                         <div th:if="${param.error}" class="alert alert-warning" style="color: red;">

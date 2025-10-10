@@ -12,4 +12,5 @@ import lombok.Setter;
 public class BlogDto {
     private String text;
     private String title;
+    private String username;
 }

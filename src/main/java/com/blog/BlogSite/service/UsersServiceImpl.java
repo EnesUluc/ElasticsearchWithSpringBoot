@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsersServiceImpl implements UsersService{
     private final UsersRepo usersRepo;
@@ -40,5 +42,15 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public void deleteById(Integer userId) {
         usersRepo.deleteById(userId);
+    }
+
+    @Override
+    public boolean checkEmailIsRegistered(String email) {
+        return usersRepo.findByEmail(email) != null;
+    }
+
+    @Override
+    public Optional<Users> findById(Integer id) {
+        return usersRepo.findById(id);
     }
 }
