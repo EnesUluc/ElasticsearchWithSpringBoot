@@ -10,22 +10,30 @@
     <title>Blogs</title>
 </head>
 <body class="d-grid g-1 main-page">
-<header class="bg-primary">
-    <div class="container">
-        <div class="navbar d-flex justify-content-between">
-            <div>
-                <a href="" class="active"><i class="fa-solid fa-blog"></i> Blogistan</a>
-            </div>
-            <div class="d-flex d-flex-row g-2">
-                <div><a th:href="@{/blogs/create-blog}"><i class="fas fa-edit"></i> Create Blog</a></div>
-                <div><a th:href="@{/account}"><i class="fa-solid fa-user"></i> Account</a></div>
-                <div><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a></div>
+    <header class="bg-primary">
+        <div class="container">
+            <div class="navbar d-flex justify-content-between">
+                <div>
+                    <a th:href="@{/blogs}" class="active"><i class="fa-solid fa-blog"></i> Blogistan</a>
+                </div>
+                <div class="d-flex d-flex-row g-2">
+                    <div><a th:href="@{/blogs/create-blog}"><i class="fas fa-edit"></i> Create Blog</a></div>
+                    <div><a th:href="@{/account}"><i class="fa-solid fa-user"></i> Account</a></div>
+                    <div><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a></div>
+                </div>
             </div>
         </div>
-    </div>
-
-
-</header>
+    </header>
+    <section>
+        <div class="container">
+            <form th:action="@{/blogs/search}" method="get">
+                <div class="card d-flex g-2">
+                    <input type="search" name="query" autocomplete="false" inputmode="search" class="search" placeholder="Enter author, tags or title...">
+                    <button type="submit"  class="btn btn-secondary">Search</button>
+                </div>
+            </form>
+        </div>
+    </section>
 
     <section>
         <div class="container d-grid g-1">

@@ -84,8 +84,18 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public List<Blog> searchByTextWord(String text) {
-        return blogRepo.searchByText(text);
+    public List<BlogDto> searchByTextWord(String text) {
+        List<Blog> blogList = blogRepo.searchByText(text);
+        List<BlogDto> blogDtoList = new ArrayList<>();
+        for(Blog blog: blogList){
+            BlogDto blogDto = new BlogDto();
+            blogDto.setTitle(blog.getTitle());
+            blogDto.setText(blog.getText());
+            usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
+
+            blogDtoList.add(blogDto);
+        }
+        return blogDtoList;
     }
 
     @Override

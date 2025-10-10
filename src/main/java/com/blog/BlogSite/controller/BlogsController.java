@@ -96,4 +96,12 @@ public class BlogsController {
         userBlogService.deleteByBlogId(blogId);
         return "redirect:/blogs";
     }
+
+    // Mesela bir metinden a , ikinci metinden b sözcüpününü aratınca bir şey çıkmıyor ama ikisini de çıksın gibi bir güncelleme yapabiliriz.
+    @GetMapping("/search")
+    public String searchBlogs(@RequestParam("query") String query, Model model){
+        List<BlogDto> blogs = blogService.searchByTextWord(query);
+        model.addAttribute("blogList", blogs);
+        return "blogs";
+    }
 }

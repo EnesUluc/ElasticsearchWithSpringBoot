@@ -134,6 +134,18 @@ a:hover{
     cursor: pointer;
 }
 
+.btn-secondary{
+    background-color: var(--bg-light);
+    border: 1px solid var(--bg-secondary);
+    color: var(--bg-gray);
+}
+.btn-secondary:hover{
+    background-color: var(--bg-secondary);
+    color: var(--bg-gray);
+    transition-duration: .4s;
+    cursor: pointer;
+}
+
 /* cards */
 .card{
     padding:1rem 1rem;
@@ -247,7 +259,9 @@ header{
     padding: .6rem;
     color: var(--bg-gray);
     font-weight: 700;
+
 }
+
 /* table */
 th, td{
     padding: 1rem;
@@ -267,6 +281,16 @@ tr:hover{
     cursor: pointer;
 }
 
+/* search input */
+.search{
+    width: 90%;
+    border: none;
+    border-radius: 36px;
+}
+.search:focus{
+    outline: none;
+    border: 1px solid var(--bg-dark);
+}
 
 @media(max-width:1200px){
     .card-box{
