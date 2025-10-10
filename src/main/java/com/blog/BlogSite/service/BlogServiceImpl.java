@@ -98,4 +98,14 @@ public class BlogServiceImpl implements BlogService{
     public void deleteAllByUserId(int userId) {
         blogRepo.deleteAllByUserId(userId);
     }
+
+    @Override
+    public void deleteByBlogId(int blogId) {
+        blogRepo.deleteByBlogId(blogId);
+    }
+
+    @Override
+    public List<Blog> findAllBlogsByUserId(int userId) {
+        return blogRepo.findAllByUserId(userId);
+    }
 }

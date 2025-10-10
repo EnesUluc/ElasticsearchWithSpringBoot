@@ -3,6 +3,7 @@ package com.blog.BlogSite.service;
 import co.elastic.clients.util.DateTime;
 import com.blog.BlogSite.entity.UserBlog;
 import com.blog.BlogSite.repo.UserBlogRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,11 @@ public class UserBlogServiceImpl implements UserBlogService {
     public UserBlog save(UserBlog userBlog) {
         userBlog.setCreatedAt(LocalDateTime.now());
         return userBlogRepo.save(userBlog);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByBlogId(int blogId) {
+        userBlogRepo.deleteByBlogId(blogId);
     }
 }

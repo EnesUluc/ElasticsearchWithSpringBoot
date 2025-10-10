@@ -61,21 +61,39 @@ public class BlogsController {
 
     @GetMapping("/edit-blogs")
     public String listYourBlogs(Model model){
-        List<Blog> blogList = blogService.findAllBlogs();
+        Users user = usersService.getCurrentUserProfile();
+        List<Blog> blogList = blogService.findAllBlogsByUserId(user.getUserId());
         model.addAttribute("blogList", blogList);
         return "blog-edit";
     }
 
     @GetMapping("/edit-blogs/{id}")
-    public String editYourBlog(@PathVariable("id") int blogId){
-
-        // Çok temiz geliyor veri, artık burayı yolu düzenle yeni sayfamıza fırlat edit edelim blogumuzu.
+    public String editYourBlog(@PathVariable("id") int blogId, Model model){
         Blog blog = blogService.findByBlogId(blogId);
-        System.out.println("Blog id: "+blogId);
-        System.out.println("Blog title: "+blog.getTitle());
-        System.out.println("User: "+blog.getUserId());
+
+        BlogDto blogDto = new BlogDto();
+        blogDto.setBlogId(blogId);
+        blogDto.setText(blog.getText());
+        blogDto.setTitle(blog.getTitle());
+        model.addAttribute("blogDto", blogDto);
+
+        return "blog-update";
+    }
+
+    @PostMapping("/update-blog")
+    public String updateYourBlog(BlogDto blogDto){
+        Blog blog = blogService.findByBlogId(blogDto.getBlogId());
+        blog.setText(blogDto.getText());
+        blog.setTitle(blogDto.getTitle());
+        blogService.saveBlog(blog);
 
         return "redirect:/blogs";
+    }
 
+    @GetMapping("/delete-blog")
+    public String deleteBlog(@RequestParam("id") int blogId){
+        blogService.deleteByBlogId(blogId);
+        userBlogService.deleteByBlogId(blogId);
+        return "redirect:/blogs";
     }
 }

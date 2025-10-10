@@ -6,14 +6,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Edit Blog</title>
+    <title>Create Blog</title>
 </head>
 <body class="d-grid g-1 main-page">
     <header class="bg-primary">
         <div class="container">
             <div class="navbar d-flex justify-content-between">
                 <div>
-                    <a th:href="@{/blogs}"><i class="fa-solid fa-blog"></i> Blogistan</a>
+                    <a th:href="@{/blogs}" class=""><i class="fa-solid fa-blog"></i> Blogistan</a>
                 </div>
                 <div class="d-flex d-flex-row g-2">
                     <div><a th:href="@{/blogs/create-blog}"><i class="fas fa-edit"></i> Create Blog</a></div>
@@ -22,34 +22,38 @@
                 </div>
             </div>
         </div>
-
-
     </header>
 
     <section>
-        <div class="container">
-            <div class="card d-grid g-3 justify-content-center">
-                <div class="title text-center"><h3>Select a Blog</h3></div>
-                <div>
-                    <table class="card">
-                        <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="blog : ${blogList}">
-                                <td th:text="${blog.title}"></td>
-                                <td>
-                                    <a th:href="@{/blogs/edit-blogs/{id}(id=${blog.blogId})}" class="btn btn-dark">Edit</a>
-                                    <a th:href="@{/blogs/delete-blog(id=${blog.blogId})}" class="btn btn-dark">Remove</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="container text-center">
+            <form th:action="@{/blogs/update-blog}" method="post" th:object="${blogDto}">
+                <div class="card d-grid g-1">
+                    <div class="title"><h3>Update Blog</h3></div>
+                    <input type="hidden" placeholder="${blogDto.blogId}" th:field="*{blogId}">
+                    <div>
+                        <div class="blog-header">
+                            Title
+                        </div>
+                        <div class="blog-body">
+                            <input type="text" placeholder="${blogDto.title}" th:field="*{title}">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="blog-header">
+                            Text
+                        </div>
+                        <div class="blog-body">
+                            <textarea placeholder="${blogDto.text}" th:field="*{text}"></textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-dark" type="submit">Update Blog</button>
+                    </div>
+
                 </div>
-            </div>
+            </form>
         </div>
     </section>
 

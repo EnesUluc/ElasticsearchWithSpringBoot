@@ -18,4 +18,6 @@ public interface BlogService {
     List<Blog> searchByTextWord(String text);
     int findAllByUserId(int userId);
     void deleteAllByUserId(int userId);
+    void deleteByBlogId(int blogId);
+    List<Blog> findAllBlogsByUserId(int userId);
 }
