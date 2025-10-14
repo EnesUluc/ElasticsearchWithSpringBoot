@@ -100,7 +100,10 @@ public class BlogsController {
     // Mesela bir metinden a , ikinci metinden b sözcüpününü aratınca bir şey çıkmıyor ama ikisini de çıksın gibi bir güncelleme yapabiliriz.
     @GetMapping("/search")
     public String searchBlogs(@RequestParam("query") String query, Model model){
-        List<BlogDto> blogs = blogService.searchByTextWord(query);
+        if(query.strip().isEmpty()){
+            return "redirect:/blogs";
+        }
+        List<BlogDto> blogs = blogService.searchByText(query);
         model.addAttribute("blogList", blogs);
         return "blogs";
     }

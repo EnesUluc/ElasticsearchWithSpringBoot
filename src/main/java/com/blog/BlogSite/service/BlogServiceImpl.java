@@ -2,13 +2,12 @@ package com.blog.BlogSite.service;
 
 import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.entity.Blog;
-import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.repo.BlogRepo;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,11 +18,13 @@ import java.util.Optional;
 public class BlogServiceImpl implements BlogService{
     private final BlogRepo blogRepo;
     private final UsersService usersService;
+    private final ElasticsearchOperations elasticsearchOperations;
 
     @Autowired
-    public BlogServiceImpl(BlogRepo blogRepo, UsersService usersService) {
+    public BlogServiceImpl(BlogRepo blogRepo, UsersService usersService, ElasticsearchOperations elasticsearchOperations) {
         this.blogRepo = blogRepo;
         this.usersService = usersService;
+        this.elasticsearchOperations = elasticsearchOperations;
     }
 
     @Override
@@ -83,20 +84,23 @@ public class BlogServiceImpl implements BlogService{
         blogRepo.deleteById(blogId);
     }
 
-    @Override
-    public List<BlogDto> searchByTextWord(String text) {
-        List<Blog> blogList = blogRepo.searchByText(text);
-        List<BlogDto> blogDtoList = new ArrayList<>();
-        for(Blog blog: blogList){
-            BlogDto blogDto = new BlogDto();
-            blogDto.setTitle(blog.getTitle());
-            blogDto.setText(blog.getText());
-            usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
+//    @Override
+//    public List<BlogDto> searchByTextWord(String text) {
+//        List<Blog> blogList = blogRepo.searchByTextOrTitleContaining(text);
+//
+//        List<BlogDto> blogDtoList = new ArrayList<>();
+//        for(Blog blog: blogList){
+//            BlogDto blogDto = new BlogDto();
+//            blogDto.setTitle(blog.getTitle());
+//            blogDto.setText(blog.getText());
+//            usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
+//
+//            blogDtoList.add(blogDto);
+//        }
+//
+//        return blogDtoList;
+//    }
 
-            blogDtoList.add(blogDto);
-        }
-        return blogDtoList;
-    }
 
     @Override
     public int findAllByUserId(int userId) {
@@ -117,5 +121,22 @@ public class BlogServiceImpl implements BlogService{
     @Override
     public List<Blog> findAllBlogsByUserId(int userId) {
         return blogRepo.findAllByUserId(userId);
+    }
+
+    @Override
+    public List<BlogDto> searchByText(String word) {
+        List<Blog> blogList = blogRepo.searchByText(word);
+
+        List<BlogDto> blogDtoList = new ArrayList<>();
+        for(Blog blog: blogList){
+            BlogDto blogDto = new BlogDto();
+            blogDto.setTitle(blog.getTitle());
+            blogDto.setText(blog.getText());
+            usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
+
+            blogDtoList.add(blogDto);
+        }
+
+        return blogDtoList;
     }
 }
