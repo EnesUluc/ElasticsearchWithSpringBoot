@@ -1,5 +1,6 @@
 package com.blog.BlogSite.service;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.repo.BlogRepo;
@@ -7,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,24 +89,6 @@ public class BlogServiceImpl implements BlogService{
         blogRepo.deleteById(blogId);
     }
 
-//    @Override
-//    public List<BlogDto> searchByTextWord(String text) {
-//        List<Blog> blogList = blogRepo.searchByTextOrTitleContaining(text);
-//
-//        List<BlogDto> blogDtoList = new ArrayList<>();
-//        for(Blog blog: blogList){
-//            BlogDto blogDto = new BlogDto();
-//            blogDto.setTitle(blog.getTitle());
-//            blogDto.setText(blog.getText());
-//            usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
-//
-//            blogDtoList.add(blogDto);
-//        }
-//
-//        return blogDtoList;
-//    }
-
-
     @Override
     public int findAllByUserId(int userId) {
         List<Blog> blogList = blogRepo.findAllByUserId(userId);
@@ -125,7 +112,7 @@ public class BlogServiceImpl implements BlogService{
 
     @Override
     public List<BlogDto> searchByText(String word) {
-        List<Blog> blogList = blogRepo.searchByText(word);
+        List<Blog> blogList = getBlogListCreatingQuery(word);
 
         List<BlogDto> blogDtoList = new ArrayList<>();
         for(Blog blog: blogList){
@@ -138,5 +125,23 @@ public class BlogServiceImpl implements BlogService{
         }
 
         return blogDtoList;
+    }
+    public List<Blog> getBlogListCreatingQuery(String word){
+        co.elastic.clients.elasticsearch._types.query_dsl.Query queryDsl =
+                QueryBuilders.multiMatch()
+                        .query(word)
+                        .fields("title^2", "text")
+                        .build()
+                        ._toQuery();
+
+        Query query = NativeQuery.builder()
+                .withQuery(queryDsl)
+                .build();
+
+        SearchHits<Blog> hits = elasticsearchOperations.search(query, Blog.class);
+
+        return  hits.stream()
+                .map(SearchHit::getContent)
+                .toList();
     }
 }

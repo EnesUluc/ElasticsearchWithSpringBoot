@@ -2,25 +2,12 @@ package com.blog.BlogSite.repo;
 
 import com.blog.BlogSite.entity.Blog;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
     public interface BlogRepo extends ElasticsearchRepository<Blog, String> {
-    @Query("""
-            {
-              "query": {
-                "multi_match": {
-                  "query": "?0",
-                  "fields": ["title^2", "text"],
-                  "operator": "or"
-                }
-              }
-            }
-            """)
-    List<Blog> searchByText(String word);
     List<Blog> findAllByUserId(int userId);
     void deleteAllByUserId(int userId);
     Blog findByBlogId(int blogId);

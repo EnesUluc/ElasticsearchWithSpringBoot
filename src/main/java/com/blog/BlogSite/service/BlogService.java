@@ -15,7 +15,6 @@ public interface BlogService {
     Optional<Blog> findByBlogId(String blogId);
     Blog findByBlogId(int id);
     void deleteBlog(String blogId);
-    //List<BlogDto> searchByTextWord(String text);
     int findAllByUserId(int userId);
     void deleteAllByUserId(int userId);
     void deleteByBlogId(int blogId);
