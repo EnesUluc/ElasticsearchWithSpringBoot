@@ -6,6 +6,36 @@
     --bg-dark: #96A78D;
     --bg-gray: #393E46;
 }
+.darkmode{
+    --bg-white: #96A78D;
+    --bg-light: #393E46;
+    --bg-primary:  #393E46;
+    --bg-secondary: #393E46;
+    --bg-dark: #393E46;
+    --bg-gray: #F0F0F0;
+}
+/* Dark Mode */
+#theme-switch{
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a:last-child{
+       display: none;
+    }
+
+}
+.darkmode #theme-switch a:first-child{
+    display: none;
+}
+.darkmode #theme-switch a:last-child{
+    display: block;
+}
 body{
     font-family: "Prompt", sans-serif;
     font-weight: 300;
@@ -29,6 +59,7 @@ input{
     padding: .5rem .8rem;
     color: var(--bg-gray);
     font-size: 1rem;
+    background-color: var(--bg-secondary);
 }
 input:focus{
     outline: none;
@@ -119,7 +150,7 @@ a:hover{
 
 /* Buttons */
 .btn{
-    color: var(--bg-purple);
+    color: var(--bg-gray);
     font-size: 14px;
     border-radius: 12px;
     padding: .5rem .8rem
@@ -183,11 +214,15 @@ header{
         border-radius: 100%;
     }
 }
+.name{
+    color: var(--bg-gray);
+}
 .text{
     padding: .6rem;
     max-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
+    color: var(--bg-gray);
 }
 .title{
     color: var(--bg-gray);
@@ -214,6 +249,12 @@ header{
     position: relative;
     opacity: .9;
     background-image: url("../images/background.png") ;
+    background-size: cover;
+}
+.dark-main-page{
+    position: relative;
+    opacity: .9;
+    background-image: url("../images/darkbackground.png") ;
     background-size: cover;
 }
 

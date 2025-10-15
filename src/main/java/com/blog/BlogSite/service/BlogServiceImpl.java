@@ -24,6 +24,7 @@ public class BlogServiceImpl implements BlogService{
     private final BlogRepo blogRepo;
     private final UsersService usersService;
     private final ElasticsearchOperations elasticsearchOperations;
+    private co.elastic.clients.elasticsearch._types.query_dsl.Query queryDsl;
 
     @Autowired
     public BlogServiceImpl(BlogRepo blogRepo, UsersService usersService, ElasticsearchOperations elasticsearchOperations) {
@@ -127,13 +128,11 @@ public class BlogServiceImpl implements BlogService{
         return blogDtoList;
     }
     public List<Blog> getBlogListCreatingQuery(String word){
-        co.elastic.clients.elasticsearch._types.query_dsl.Query queryDsl =
-                QueryBuilders.multiMatch()
-                        .query(word)
-                        .fields("title^2", "text")
-                        .build()
-                        ._toQuery();
-
+        queryDsl = QueryBuilders.multiMatch()
+                .query(word)
+                .fields("title^2", "text")
+                .build()
+                ._toQuery();
         Query query = NativeQuery.builder()
                 .withQuery(queryDsl)
                 .build();
