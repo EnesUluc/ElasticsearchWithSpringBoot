@@ -8,38 +8,29 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "user_blog")
-public class UserBlog {
-
+@Table(name = "comments")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer blogId;
+    private Integer commentId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
 
+    @ManyToOne
+    @JoinColumn(name = "blog_id")
+    private UserBlog blog;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
-
-    public void addComment(Comment comment){
-        comments.add(comment);
-        comment.setBlog(this);
-    }
-    public void removeComment(Comment comment){
-        comments.remove(comment);
-        comment.setBlog(null);
-    }
+    private String content;
 
 }

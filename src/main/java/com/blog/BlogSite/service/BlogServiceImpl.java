@@ -67,7 +67,8 @@ public class BlogServiceImpl implements BlogService{
             BlogDto blogDto = new BlogDto();
             blogDto.setTitle(blog.getTitle());
             blogDto.setText(blog.getText());
-
+            blogDto.setBlogId(blog.getBlogId());
+            
             // Get the username
             usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
             blogDtos.add(blogDto);

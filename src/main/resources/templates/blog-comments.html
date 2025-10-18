@@ -14,22 +14,12 @@
         <div class="container">
             <div class="navbar d-flex justify-content-between">
                 <div>
-                    <a th:href="@{/blogs}" class="active"><i class="fa-solid fa-blog"></i> Blogistan</a>
+                    <a th:href="@{/blogs}"><i class="fa-solid fa-blog"></i> Blogistan</a>
                 </div>
                 <div class="d-flex d-flex-row g-2">
                     <div><a th:href="@{/blogs/create-blog}"><i class="fas fa-edit"></i> Create Blog</a></div>
                     <div><a th:href="@{/account}"><i class="fa-solid fa-user"></i> Account</a></div>
                     <div><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a></div>
-                    <div>
-                        <button id="theme-switch">
-                            <a>
-                                <i class="fa-solid fa-sun"></i>
-                            </a>
-                            <a>
-                                <i class="fa-solid fa-moon"></i>
-                            </a>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -47,19 +37,33 @@
 
     <section>
         <div class="container d-grid g-1">
-            <div class="card card-blog" th:each="blog : ${blogList}">
+            <div class="card card-blog">
                 <div class="profile">
                     <div class="img"><img th:src="@{/images/user.jpg}" alt=""></div>
                     <div class="name" th:text="${blog.username}"></div>
                 </div>
                 <div><h3 class="blog-title" th:text="${blog.title}"></h3></div>
                 <div class="text" th:text="${blog.text}">
+                </div>
+
+                <div class=" blog-comments d-grid g-1">
+                    <div th:each="blogComment : ${blogComments}">
+                        <div class="title" th:text="${blogComment.user.email}"></div>
+                        <div class="comment-text" th:text="${blogComment.content}"></div>
+                    </div>
+
+                    <form th:action="@{/blogs/comments/add-comment}" th:object="${comment}" method="post">
+                        <input type="hidden"  th:field="*{user}">
+                        <input type="hidden"  th:field="*{blog}">
+                        <div class="d-grid g-2 place-items">
+                            <input type="text" th:field="*{content}">
+                            <button class="btn btn-dark" type="submit">Comment</button>
+                        </div>
+                    </form>
+
 
                 </div>
-                <div class="like d-flex justify-content-end g-1">
-                    <a th:href="@{/blogs/comments/{id}(id=${blog.blogId})}"><i class="fa-solid fa-comment comment"></i></a>
-                    <a href=""><i class="fa-solid fa-heart" style="color: red;"></i> 17</a>
-                </div>
+
             </div>
 
         </div>

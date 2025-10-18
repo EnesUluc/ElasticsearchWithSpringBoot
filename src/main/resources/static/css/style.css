@@ -5,6 +5,7 @@
     --bg-secondary: #B6CEB4;
     --bg-dark: #96A78D;
     --bg-gray: #393E46;
+    --bg-comment: #799EFF ;
 }
 .darkmode{
     --bg-white: #96A78D;
@@ -13,6 +14,7 @@
     --bg-secondary: #393E46;
     --bg-dark: #393E46;
     --bg-gray: #F0F0F0;
+    --bg-comment: #F0F0F0;
 }
 /* Dark Mode */
 #theme-switch{
@@ -331,6 +333,30 @@ tr:hover{
 .search:focus{
     outline: none;
     border: 1px solid var(--bg-dark);
+}
+
+/*Comment*/
+.comment {
+   color: var(--bg-comment);
+}
+.blog-comments{
+    border: 1px solid var(--bg-dark);
+    padding: .8rem 1rem;
+    border-radius: 12px;
+    background-color: var(--bg-gray);
+
+    input{
+        width: 70%;
+    }
+
+    .title{
+        color: var(--bg-primary);
+        font-size: 18px;
+    }
+    .comment-text{
+        color: var(--bg-light);
+        font-size: 15px;
+    }
 }
 
 @media(max-width:1200px){
