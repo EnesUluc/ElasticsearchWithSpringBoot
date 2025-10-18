@@ -4,6 +4,7 @@ import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.dto.CommentDto;
 import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.entity.UserBlog;
+import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.service.BlogService;
 import com.blog.BlogSite.service.CommentService;
 import com.blog.BlogSite.service.UserBlogService;
@@ -52,10 +53,12 @@ public class CommentsController {
         comment.setBlog(userBlogService.findById(blogId));
         comment.setUser(usersService.getCurrentUserProfile());
 
+
         List<CommentDto> blogComments = commentService.findAllBlogComments(blogId);
 
         model.addAttribute("blogComments", blogComments);
         model.addAttribute("comment", comment);
+        model.addAttribute("theUser", usersService.getCurrentUserProfile());
 
         return "blog-comments";
     }
@@ -63,9 +66,15 @@ public class CommentsController {
     @PostMapping("/add-comment")
     public String addComment(CommentDto commentDto){
         commentService.saveComment(commentDto);
-        System.out.println("Comment: "+commentDto.getContent());
-        System.out.println("Blog Id: "+commentDto.getBlog().getBlogId());
-        System.out.println("User: "+commentDto.getUser().getEmail());
-        return "redirect:/blogs";
+        return "redirect:/blogs/comments/"+commentDto.getBlog().getBlogId();
     }
+
+    @GetMapping("/remove-comment/{id}")
+    public String removeComment(@PathVariable("id") int commentId){
+        int blogId = commentService.findBlogIdByCommentId(commentId).getBlogId();
+
+        commentService.deleteComment(commentId);
+        return "redirect:/blogs/comments/"+blogId;
+    }
+
 }

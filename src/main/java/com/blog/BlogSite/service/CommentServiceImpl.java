@@ -1,7 +1,9 @@
 package com.blog.BlogSite.service;
 
 import com.blog.BlogSite.dto.CommentDto;
+import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.entity.Comment;
+import com.blog.BlogSite.entity.UserBlog;
 import com.blog.BlogSite.repo.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +41,22 @@ public class CommentServiceImpl implements CommentService{
             commentDto.setBlog(comment.getBlog());
             commentDto.setContent(comment.getContent());
             commentDto.setUser(comment.getUser());
-
+            commentDto.setCommentId(comment.getCommentId());
             commentDtoList.add(commentDto);
         }
         return commentDtoList;
+    }
+
+    @Override
+    public void deleteComment(int commentId) {
+        commentRepo.deleteById(commentId);
+    }
+
+    @Override
+    public UserBlog findBlogIdByCommentId(int commentId) {
+        Comment comment = commentRepo.findById(commentId).orElse(null);
+        System.out.println(comment.getBlog());
+        System.out.println(comment.getBlog().getBlogId());
+        return comment != null ? comment.getBlog() : null;
     }
 }

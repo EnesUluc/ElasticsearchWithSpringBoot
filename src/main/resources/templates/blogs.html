@@ -57,7 +57,7 @@
 
                 </div>
                 <div class="like d-flex justify-content-end g-1">
-                    <a th:href="@{/blogs/comments/{id}(id=${blog.blogId})}"><i class="fa-solid fa-comment comment"></i></a>
+                    <a class="notification" th:href="@{/blogs/comments/{id}(id=${blog.blogId})}"><i class="fa-solid fa-comment comment"></i><span class="badge">3</span></a></a>
                     <a href=""><i class="fa-solid fa-heart" style="color: red;"></i> 17</a>
                 </div>
             </div>
