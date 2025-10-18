@@ -66,13 +66,12 @@ public class CommentsController {
     @PostMapping("/add-comment")
     public String addComment(CommentDto commentDto){
         commentService.saveComment(commentDto);
-        return "redirect:/blogs/comments/"+commentDto.getBlog().getBlogId();
+        return "redirect:/blogs/comments/"+commentDto.getBlogId();
     }
 
     @GetMapping("/remove-comment/{id}")
     public String removeComment(@PathVariable("id") int commentId){
-        int blogId = commentService.findBlogIdByCommentId(commentId).getBlogId();
-
+        int blogId = commentService.findBlogIdByCommentId(commentId);
         commentService.deleteComment(commentId);
         return "redirect:/blogs/comments/"+blogId;
     }

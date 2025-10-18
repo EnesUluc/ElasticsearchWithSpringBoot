@@ -53,10 +53,9 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public UserBlog findBlogIdByCommentId(int commentId) {
+    public int findBlogIdByCommentId(int commentId) {
         Comment comment = commentRepo.findById(commentId).orElse(null);
-        System.out.println(comment.getBlog());
-        System.out.println(comment.getBlog().getBlogId());
-        return comment != null ? comment.getBlog() : null;
+        return comment != null ? comment.getBlogId(): 0;
     }
+
 }

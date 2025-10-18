@@ -10,5 +10,5 @@ public interface CommentService {
     Comment saveComment(CommentDto commentDto);
     List<CommentDto> findAllBlogComments(int blogId);
     void deleteComment(int commentId);
-    UserBlog findBlogIdByCommentId(int commentId);
+    int findBlogIdByCommentId(int commentId);
 }

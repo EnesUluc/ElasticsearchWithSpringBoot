@@ -16,4 +16,8 @@ public class CommentDto {
     private Users user;
     private UserBlog blog;
     private String content;
+
+    public int getBlogId(){
+        return blog.getBlogId();
+    }
 }

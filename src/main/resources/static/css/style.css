@@ -224,9 +224,6 @@ header{
 }
 .text{
     padding: .6rem;
-    max-height: 100px;
-    overflow-y: auto;
-    overflow-x: hidden;
     color: var(--bg-gray);
 }
 .title{
