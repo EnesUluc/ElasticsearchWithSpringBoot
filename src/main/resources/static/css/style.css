@@ -230,23 +230,6 @@ header{
     color: var(--bg-gray);
     letter-spacing: 1px;
 }
-/* text scrollbar */
-.text::-webkit-scrollbar{
-    width: 10px;
-}
-.text::-webkit-scrollbar-track{
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-}
-.text::-webkit-scrollbar-thumb {
-  background:var(--bg-dark);
-  border-radius: 12px;
-}
-.text::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-gray);
-}
-
-
 .main-page{
     position: relative;
     opacity: .9;
