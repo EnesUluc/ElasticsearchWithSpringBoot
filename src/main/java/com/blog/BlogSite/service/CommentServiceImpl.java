@@ -48,7 +48,6 @@ public class CommentServiceImpl implements CommentService{
         }
         return commentDtoList;
     }
-
     @Override
     public void deleteComment(int commentId) {
         commentRepo.deleteById(commentId);
@@ -65,5 +64,11 @@ public class CommentServiceImpl implements CommentService{
     public void deleteAllByUser(Users user) {
         commentRepo.deleteAllByUser(user);
     }
+
+    @Override
+    public int getBlogCommentsSize(int blogId) {
+        return findAllBlogComments(blogId).size();
+    }
+
 
 }

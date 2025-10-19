@@ -15,6 +15,8 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +27,14 @@ public class BlogServiceImpl implements BlogService{
     private final UsersService usersService;
     private final ElasticsearchOperations elasticsearchOperations;
     private co.elastic.clients.elasticsearch._types.query_dsl.Query queryDsl;
+    private final CommentService commentService;
 
     @Autowired
-    public BlogServiceImpl(BlogRepo blogRepo, UsersService usersService, ElasticsearchOperations elasticsearchOperations) {
+    public BlogServiceImpl(BlogRepo blogRepo, UsersService usersService, ElasticsearchOperations elasticsearchOperations, CommentService commentService) {
         this.blogRepo = blogRepo;
         this.usersService = usersService;
         this.elasticsearchOperations = elasticsearchOperations;
+        this.commentService = commentService;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class BlogServiceImpl implements BlogService{
         blog.setText(blogDto.getText());
         blog.setBlogId(blogId);
         blog.setUserId(userId);
-
+        blog.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         return blogRepo.save(blog);
     }
 
@@ -68,7 +72,8 @@ public class BlogServiceImpl implements BlogService{
             blogDto.setTitle(blog.getTitle());
             blogDto.setText(blog.getText());
             blogDto.setBlogId(blog.getBlogId());
-            
+            blogDto.setCommentCount(commentService.getBlogCommentsSize(blogDto.getBlogId()));
+            blogDto.setCreatedAt(blog.getCreatedAt());
             // Get the username
             usersService.findById(blog.getUserId()).ifPresent(users -> blogDto.setUsername(users.getEmail()));
             blogDtos.add(blogDto);

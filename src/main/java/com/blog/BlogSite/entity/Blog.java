@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,4 +23,5 @@ public class Blog {
     private int blogId;
     private String title;
     private String text;
+    private String createdAt;
 }

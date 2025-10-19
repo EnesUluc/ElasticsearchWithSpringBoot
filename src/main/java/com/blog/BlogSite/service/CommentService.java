@@ -13,4 +13,5 @@ public interface CommentService {
     void deleteComment(int commentId);
     int findBlogIdByCommentId(int commentId);
     void deleteAllByUser(Users user);
+    int getBlogCommentsSize(int blogId);
 }

@@ -48,16 +48,19 @@
     <section>
         <div class="container d-grid g-1">
             <div class="card card-blog" th:each="blog : ${blogList}">
-                <div class="profile">
-                    <div class="img"><img th:src="@{/images/user.jpg}" alt=""></div>
-                    <div class="name" th:text="${blog.username}"></div>
+                <div class="d-flex justify-content-between">
+                    <div class="profile">
+                        <div class="img"><img th:src="@{/images/user.jpg}" alt=""></div>
+                        <div class="name" th:text="${blog.username}"></div>
+                    </div>
+                    <div class="date d-flex place-items"><span th:text="${blog.createdAt}"></span></div>
                 </div>
                 <div><h3 class="blog-title" th:text="${blog.title}"></h3></div>
                 <div class="text" th:text="${blog.text}">
 
                 </div>
                 <div class="like d-flex justify-content-end g-1">
-                    <a class="notification" th:href="@{/blogs/comments/{id}(id=${blog.blogId})}"><i class="fa-solid fa-comment comment"></i><span class="badge">3</span></a></a>
+                    <a class="notification" th:href="@{/blogs/comments/{id}(id=${blog.blogId})}"><i class="fa-solid fa-comment comment"></i><span class="badge" th:text="${blog.commentCount}"></span></a></a>
                     <a href=""><i class="fa-solid fa-heart" style="color: red;"></i> 17</a>
                 </div>
             </div>

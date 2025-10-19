@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -45,12 +47,10 @@ public class BlogsController {
     public String createBlog(BlogDto blogDto){
         Users user = usersService.getCurrentUserProfile();
 
-        // Create a user blog
         UserBlog userBlog = new UserBlog();
         userBlog.setUser(user);
         user.getBlogs().add(userBlog);
         UserBlog savedUserBlog = userBlogService.save(userBlog);
-
 
         int blogId = savedUserBlog.getBlogId();
         int userId = user.getUserId();
@@ -64,6 +64,7 @@ public class BlogsController {
         Users user = usersService.getCurrentUserProfile();
         List<Blog> blogList = blogService.findAllBlogsByUserId(user.getUserId());
         model.addAttribute("blogList", blogList);
+
         return "blog-edit";
     }
 
@@ -80,11 +81,13 @@ public class BlogsController {
         return "blog-update";
     }
 
+
     @PostMapping("/update-blog")
     public String updateYourBlog(BlogDto blogDto){
         Blog blog = blogService.findByBlogId(blogDto.getBlogId());
-        blog.setText(blogDto.getText());
+        blog.setText(blogDto.getText() + " (Edited)");
         blog.setTitle(blogDto.getTitle());
+        blog.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         blogService.saveBlog(blog);
 
         return "redirect:/blogs";
@@ -99,9 +102,8 @@ public class BlogsController {
 
     @GetMapping("/search")
     public String searchBlogs(@RequestParam("query") String query, Model model){
-        if(query.strip().isEmpty()){
-            return "redirect:/blogs";
-        }
+        if(query.isBlank()){ return "redirect:/blogs"; }
+
         List<BlogDto> blogs = blogService.searchByText(query);
         model.addAttribute("blogList", blogs);
         return "blogs";
