@@ -4,7 +4,9 @@ import com.blog.BlogSite.dto.CommentDto;
 import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.entity.Comment;
 import com.blog.BlogSite.entity.UserBlog;
+import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.repo.CommentRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,12 @@ public class CommentServiceImpl implements CommentService{
     public int findBlogIdByCommentId(int commentId) {
         Comment comment = commentRepo.findById(commentId).orElse(null);
         return comment != null ? comment.getBlogId(): 0;
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllByUser(Users user) {
+        commentRepo.deleteAllByUser(user);
     }
 
 }

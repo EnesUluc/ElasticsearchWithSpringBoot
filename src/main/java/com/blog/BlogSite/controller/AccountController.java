@@ -2,6 +2,7 @@ package com.blog.BlogSite.controller;
 
 import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.service.BlogService;
+import com.blog.BlogSite.service.CommentService;
 import com.blog.BlogSite.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     private final UsersService usersService;
     private final BlogService blogService;
+    private final CommentService commentService;
 
     @Autowired
-    public AccountController(UsersService usersService, BlogService blogService){
+    public AccountController(UsersService usersService, BlogService blogService, CommentService commentService){
         this.usersService = usersService;
         this.blogService = blogService;
+        this.commentService = commentService;
     }
 
     @GetMapping("")
@@ -28,13 +31,14 @@ public class AccountController {
 
         model.addAttribute("email",email);
         model.addAttribute("blogCount", blogCount);
-        System.out.println("User id: "+user.getUserId());
         model.addAttribute("userId", user.getUserId());
+
         return "account";
     }
 
     @GetMapping("/delete")
     public String accountDelete(@RequestParam("id")Integer userId){
+        commentService.deleteAllByUser(usersService.findById(userId).orElse(null));
         usersService.deleteById(userId);
         blogService.deleteAllByUserId(userId);
         return "redirect:/?info";
