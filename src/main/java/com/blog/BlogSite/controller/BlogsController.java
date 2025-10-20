@@ -7,9 +7,11 @@ import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.service.BlogService;
 import com.blog.BlogSite.service.UserBlogService;
 import com.blog.BlogSite.service.UsersService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -44,7 +46,10 @@ public class BlogsController {
     }
 
     @PostMapping("/create-blog")
-    public String createBlog(BlogDto blogDto){
+    public String createBlog(@Valid @ModelAttribute("blog") BlogDto blogDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "blog-create";
+        }
         Users user = usersService.getCurrentUserProfile();
 
         UserBlog userBlog = new UserBlog();
@@ -83,7 +88,10 @@ public class BlogsController {
 
 
     @PostMapping("/update-blog")
-    public String updateYourBlog(BlogDto blogDto){
+    public String updateYourBlog(@Valid BlogDto blogDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "blog-update";
+        }
         Blog blog = blogService.findByBlogId(blogDto.getBlogId());
         blog.setText(blogDto.getText() + " (Edited)");
         blog.setTitle(blogDto.getTitle());

@@ -37,6 +37,9 @@
                         <div class="blog-body">
                             <input type="text" th:field="*{title}">
                         </div>
+                        <div th:if="${#fields.hasErrors('title')}"
+                                   th:errors="*{title}"
+                                   class="error"></div>
                     </div>
 
                     <div>
@@ -46,6 +49,9 @@
                         <div class="blog-body">
                             <textarea name="" id="" th:field="*{text}"></textarea>
                         </div>
+                        <div th:if="${#fields.hasErrors('text')}"
+                              th:errors="*{text}"
+                              class="error"></div>
                     </div>
 
                     <div>

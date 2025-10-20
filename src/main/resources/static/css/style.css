@@ -152,6 +152,10 @@ a:hover{
 .bg-gray{
     background-color: var(--bg-gray);
 }
+.error{
+    color: red;
+    font-size: 18px;
+}
 
 /* Buttons */
 .btn{
