@@ -4,12 +4,13 @@ import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.dto.CommentDto;
 import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.entity.Comment;
-import com.blog.BlogSite.log.LoggerFactory;
+import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.service.BlogService;
 import com.blog.BlogSite.service.CommentService;
 import com.blog.BlogSite.service.UserBlogService;
 import com.blog.BlogSite.service.UsersService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/blogs/comments")
 public class CommentsController {
@@ -25,7 +27,7 @@ public class CommentsController {
     private final UsersService usersService;
     private final UserBlogService userBlogService;
     private final CommentService commentService;
-    private final LoggerFactory log = LoggerFactory.getInstance();
+    //private final SingletonLogger log = SingletonLogger.getInstance();
 
     @Autowired
     public CommentsController(BlogService blogService, UsersService usersService,
@@ -69,7 +71,10 @@ public class CommentsController {
             return "redirect:/blogs/comments/"+blogId;
         }
         Comment savedComment = commentService.saveComment(comment);
-        log.writeLog("There is a new comment -> "+savedComment.getCommentId());
+
+        Users user = usersService.getCurrentUserProfile();
+        String username = user.getEmail();
+        log.info("User: {} published a new comment -> Comment Id: {}", username, savedComment.getCommentId());
         return "redirect:/blogs/comments/"+blogId;
     }
 
@@ -77,7 +82,10 @@ public class CommentsController {
     public String removeComment(@PathVariable("id") int commentId){
         int blogId = commentService.findBlogIdByCommentId(commentId);
         commentService.deleteComment(commentId);
-        log.writeLog("The comment is deleted -> "+ commentId);
+
+        Users user = usersService.getCurrentUserProfile();
+        String username = user.getEmail();
+        log.info("User: {} deleted a comment -> Comment Id: {}",username,  commentId);
         return "redirect:/blogs/comments/"+blogId;
     }
 

@@ -1,0 +1,22 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+
+    <appender name="JSON_FILE" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>
+                "%d{yyyy-MM-dd HH-mm-ss} [%thread] %-5level %logger{36} - %msg%n"
+            </pattern>
+        </encoder>
+        <file>./logs/app-log.json</file>
+    </appender>
+
+    <logger name="com.blog.BlogSite" level="INFO" additivity="false">
+        <appender-ref ref="JSON_FILE" />
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
