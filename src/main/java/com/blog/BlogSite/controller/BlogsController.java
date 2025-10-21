@@ -4,6 +4,7 @@ import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.entity.Blog;
 import com.blog.BlogSite.entity.UserBlog;
 import com.blog.BlogSite.entity.Users;
+import com.blog.BlogSite.log.LoggerFactory;
 import com.blog.BlogSite.service.BlogService;
 import com.blog.BlogSite.service.UserBlogService;
 import com.blog.BlogSite.service.UsersService;
@@ -24,6 +25,7 @@ public class BlogsController {
     private final UsersService usersService;
     private final UserBlogService userBlogService;
     private final BlogService blogService;
+    private final LoggerFactory log = LoggerFactory.getInstance();
 
     @Autowired
     public BlogsController(UsersService usersService, UserBlogService userBlogService, BlogService blogService) {
@@ -61,6 +63,8 @@ public class BlogsController {
         int userId = user.getUserId();
         blogService.saveBlogDto(blogDto, blogId, userId);
 
+        log.writeLog(user.getEmail() + " created a blog with blog id -> "+blogId);
+
         return "redirect:/blogs";
     }
 
@@ -92,11 +96,15 @@ public class BlogsController {
         if(bindingResult.hasErrors()){
             return "blog-update";
         }
-        Blog blog = blogService.findByBlogId(blogDto.getBlogId());
+        int blogId = blogDto.getBlogId();
+        Blog blog = blogService.findByBlogId(blogId);
         blog.setText(blogDto.getText() + " (Edited)");
         blog.setTitle(blogDto.getTitle());
         blog.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         blogService.saveBlog(blog);
+
+
+        log.writeLog( "The blog is updated with id -> " + blogId);
 
         return "redirect:/blogs";
     }
@@ -105,6 +113,7 @@ public class BlogsController {
     public String deleteBlog(@RequestParam("id") int blogId){
         blogService.deleteByBlogId(blogId);
         userBlogService.deleteByBlogId(blogId);
+        log.writeLog("The blog is deleted with id -> "+ blogId);
         return "redirect:/blogs";
     }
 

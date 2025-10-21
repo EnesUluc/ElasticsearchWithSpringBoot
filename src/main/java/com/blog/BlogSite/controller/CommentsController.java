@@ -3,6 +3,8 @@ package com.blog.BlogSite.controller;
 import com.blog.BlogSite.dto.BlogDto;
 import com.blog.BlogSite.dto.CommentDto;
 import com.blog.BlogSite.entity.Blog;
+import com.blog.BlogSite.entity.Comment;
+import com.blog.BlogSite.log.LoggerFactory;
 import com.blog.BlogSite.service.BlogService;
 import com.blog.BlogSite.service.CommentService;
 import com.blog.BlogSite.service.UserBlogService;
@@ -23,6 +25,7 @@ public class CommentsController {
     private final UsersService usersService;
     private final UserBlogService userBlogService;
     private final CommentService commentService;
+    private final LoggerFactory log = LoggerFactory.getInstance();
 
     @Autowired
     public CommentsController(BlogService blogService, UsersService usersService,
@@ -61,17 +64,20 @@ public class CommentsController {
 
     @PostMapping("/add-comment")
     public String addComment(@Valid @ModelAttribute("comment") CommentDto comment, BindingResult bindingResult, Model model){
+        int blogId = comment.getBlogId();
         if(bindingResult.hasErrors()){
-            return "redirect:/blogs/comments/"+comment.getBlogId();
+            return "redirect:/blogs/comments/"+blogId;
         }
-        commentService.saveComment(comment);
-        return "redirect:/blogs/comments/"+comment.getBlogId();
+        Comment savedComment = commentService.saveComment(comment);
+        log.writeLog("There is a new comment -> "+savedComment.getCommentId());
+        return "redirect:/blogs/comments/"+blogId;
     }
 
     @GetMapping("/remove-comment/{id}")
     public String removeComment(@PathVariable("id") int commentId){
         int blogId = commentService.findBlogIdByCommentId(commentId);
         commentService.deleteComment(commentId);
+        log.writeLog("The comment is deleted -> "+ commentId);
         return "redirect:/blogs/comments/"+blogId;
     }
 
