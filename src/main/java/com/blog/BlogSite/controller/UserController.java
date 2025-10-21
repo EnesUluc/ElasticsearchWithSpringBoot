@@ -26,8 +26,6 @@ public class UserController {
         StringTrimmerEditor ste = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class,ste);
     }
-
-
     @GetMapping("")
     public String register(Model model){
         model.addAttribute("user",new UsersDto());

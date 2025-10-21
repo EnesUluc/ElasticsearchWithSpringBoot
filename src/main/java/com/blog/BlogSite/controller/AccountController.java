@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/account")
-public class AccountController {
+public class AccountController extends BaseController{
     private final UsersService usersService;
     private final BlogService blogService;
     private final CommentService commentService;
@@ -25,7 +25,7 @@ public class AccountController {
 
     @GetMapping("")
     public String accountDetails(Model model){
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
         String email = user.getEmail();
         int blogCount = blogService.findAllByUserId(user.getUserId());
 
@@ -43,4 +43,5 @@ public class AccountController {
         blogService.deleteAllByUserId(userId);
         return "redirect:/?info";
     }
+
 }

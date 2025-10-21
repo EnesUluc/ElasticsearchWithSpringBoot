@@ -22,12 +22,11 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/blogs/comments")
-public class CommentsController {
+public class CommentsController extends BaseController{
     private final BlogService blogService;
     private final UsersService usersService;
     private final UserBlogService userBlogService;
     private final CommentService commentService;
-    //private final SingletonLogger log = SingletonLogger.getInstance();
 
     @Autowired
     public CommentsController(BlogService blogService, UsersService usersService,
@@ -59,7 +58,7 @@ public class CommentsController {
 
         model.addAttribute("blogComments", blogComments);
         model.addAttribute("comment", comment);
-        model.addAttribute("theUser", usersService.getCurrentUserProfile());
+        model.addAttribute("theUser", getUser());
 
         return "blog-comments";
     }
@@ -72,7 +71,7 @@ public class CommentsController {
         }
         Comment savedComment = commentService.saveComment(comment);
 
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
         String username = user.getEmail();
         log.info("User: {} published a new comment -> Comment Id: {}", username, savedComment.getCommentId());
         return "redirect:/blogs/comments/"+blogId;
@@ -83,7 +82,7 @@ public class CommentsController {
         int blogId = commentService.findBlogIdByCommentId(commentId);
         commentService.deleteComment(commentId);
 
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
         String username = user.getEmail();
         log.info("User: {} deleted a comment -> Comment Id: {}",username,  commentId);
         return "redirect:/blogs/comments/"+blogId;

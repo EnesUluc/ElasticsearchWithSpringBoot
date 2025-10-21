@@ -6,7 +6,6 @@ import com.blog.BlogSite.entity.UserBlog;
 import com.blog.BlogSite.entity.Users;
 import com.blog.BlogSite.service.BlogService;
 import com.blog.BlogSite.service.UserBlogService;
-import com.blog.BlogSite.service.UsersService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,14 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/blogs")
-public class BlogsController {
-    private final UsersService usersService;
+public class BlogsController extends BaseController{
     private final UserBlogService userBlogService;
     private final BlogService blogService;
-    //private final SingletonLogger log = SingletonLogger.getInstance();
+
+
 
     @Autowired
-    public BlogsController(UsersService usersService, UserBlogService userBlogService, BlogService blogService) {
-        this.usersService = usersService;
+    public BlogsController( UserBlogService userBlogService, BlogService blogService) {
         this.userBlogService = userBlogService;
         this.blogService = blogService;
     }
@@ -53,7 +51,7 @@ public class BlogsController {
         if(bindingResult.hasErrors()){
             return "blog-create";
         }
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
 
         UserBlog userBlog = new UserBlog();
         userBlog.setUser(user);
@@ -64,7 +62,6 @@ public class BlogsController {
         int userId = user.getUserId();
         blogService.saveBlogDto(blogDto, blogId, userId);
 
-        //log.writeLog(user.getEmail() + " published a blog with blog id -> "+blogId);
         log.info("User: {} published a new blog -> Blog Id: {}", user.getEmail(), blogId);
 
         return "redirect:/blogs";
@@ -72,7 +69,7 @@ public class BlogsController {
 
     @GetMapping("/edit-blogs")
     public String listYourBlogs(Model model){
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
         List<Blog> blogList = blogService.findAllBlogsByUserId(user.getUserId());
         model.addAttribute("blogList", blogList);
 
@@ -105,8 +102,7 @@ public class BlogsController {
         blog.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         blogService.saveBlog(blog);
 
-        // Write the logs to logs/app-logs.json
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
         String username = user.getEmail();
         log.info("User: {} updated a blog -> Blog Id: {}", username, blogId);
 
@@ -118,7 +114,7 @@ public class BlogsController {
         blogService.deleteByBlogId(blogId);
         userBlogService.deleteByBlogId(blogId);
 
-        Users user = usersService.getCurrentUserProfile();
+        Users user = getUser();
         String username = user.getEmail();
         log.info("User: {} deleted a blog -> Blog Id: {}",username, blogId);
         return "redirect:/blogs";
@@ -132,4 +128,5 @@ public class BlogsController {
         model.addAttribute("blogList", blogs);
         return "blogs";
     }
+
 }
