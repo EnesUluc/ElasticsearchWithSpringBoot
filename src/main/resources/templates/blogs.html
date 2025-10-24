@@ -48,7 +48,7 @@
     <section>
         <div class="container d-grid g-1">
             <div class="card card-blog" th:each="blog : ${blogList}">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between" id="username-date">
                     <div class="profile">
                         <div class="img"><img th:src="@{/images/user.jpg}" alt=""></div>
                         <div class="name" th:text="${blog.username}"></div>

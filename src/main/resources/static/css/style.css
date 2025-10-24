@@ -237,14 +237,15 @@ header{
 .main-page{
     position: relative;
     opacity: .9;
-    background-image: url("../images/background.png") ;
+    background-image: url("../images/background.webp") ;
     background-size: cover;
 }
 .dark-main-page{
     position: relative;
     opacity: .9;
-    background-image: url("../images/darkbackground.png") ;
+    background-image: url("../images/darkbackground.webp") ;
     background-size: cover;
+
 }
 
 .active{
@@ -377,6 +378,15 @@ tr:hover{
     }
 }
 @media(max-width: 576px){
+    #username-date{
+        display: grid;
+        gap: .5rem;
+    }
+    #theme-switch{
+        height: 20px;
+        width: 20px;
+        border: none;
+    }
     .navbar{
         a{
            font-size: 0;

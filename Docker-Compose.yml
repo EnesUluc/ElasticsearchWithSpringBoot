@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysqldb:
     image: mysql:8.0
@@ -14,8 +12,9 @@ services:
     healthcheck:
       test: [ "CMD-SHELL","mysqladmin ping -h localhost -uroot -proot || exit 1" ]
       interval: 5s
-      timeout: 3s
-      retries: 20
+      timeout: 5s
+      retries: 10
+      start_period: 20s
     networks:
       - blogsite-net
   elastic:
