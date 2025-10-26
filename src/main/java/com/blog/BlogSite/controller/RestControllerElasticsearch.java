@@ -34,10 +34,6 @@ public class RestControllerElasticsearch {
         return blog.isPresent() ? blog.get() : null;
     }
 
-    //@GetMapping("/list/text/{text}")
-    //public List<Blog> findBlogsByText(@PathVariable("text") String text){
-    //    return blogService.searchByTextWord(text);
-    //}
 
     @DeleteMapping("/delete/{id}")
     public Blog deleteBlogById(@PathVariable("id") String id){

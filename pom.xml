@@ -30,6 +30,20 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+		<!--Healthcheck of project-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!--Prometheus metrics of project-->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
 		<!--Elasticsearch-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
