@@ -30,6 +30,13 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+        <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>9.0</version>
+        </dependency>
+
 		<!--Healthcheck of project-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
